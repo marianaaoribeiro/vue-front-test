@@ -34,7 +34,10 @@
         </tr>
       </table>
     </div>
-    <register-user v-show="showModal" @close-modal="showModal = false" />
+    <register-user
+      v-show="showModal"
+      @close-modal="showModal = false"
+    />
   </div>
 </template>
   
@@ -42,7 +45,7 @@
 import { auth as api } from "@/api";
 import RegisterUser from "@/components/RegisterUser.vue";
 import PageLoader from "@/components/PageLoader.vue";
-import { formatDate } from '@/shared/mixins'
+import { formatDate } from "@/shared/mixins";
 export default {
   name: "HomeView",
   components: {
@@ -92,16 +95,29 @@ export default {
           this.isLoadingData = false;
         });
     },
-    deleteClient(id) {
-      if (confirm('Deseja excluir esse Cliente?')) {
+    saveClient() {
+      const data = this.$store.getters.user;
       api
-        .delete(`/v1/Cliente/Excluir/${id}`)
+        .post(`/v1/Cliente/Adicionar/`, data)
         .then((response) => {
-          this.clients = response.data;
+          console.log(response);
+          // this.clients = response.data;
         })
         .finally(() => {
-          this.getClients()
+          // this.showModal = false;
+          // this.getClients();
         });
+    },
+    deleteClient(id) {
+      if (confirm("Deseja excluir esse Cliente?")) {
+        api
+          .delete(`/v1/Cliente/Excluir/${id}`)
+          .then((response) => {
+            this.clients = response.data;
+          })
+          .finally(() => {
+            this.getClients();
+          });
       }
     },
   },
@@ -120,10 +136,6 @@ td {
 
 tr:nth-child(even) {
   background-color: #f2f2f2;
-}
-
-.content {
-  padding: 150px;
 }
 .inner {
   margin: auto;

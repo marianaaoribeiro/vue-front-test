@@ -4,7 +4,6 @@
       <div class="modal" @click.stop>
         <span class="close" @click="$emit('close-modal')">&times;</span>
         <div style="overflow-y: auto" class="container">
-          <form>
             <table>
               <tr>
                 <td colspan="2">
@@ -216,6 +215,7 @@
                   <input
                     v-model="user.endereco.uf"
                     type="text"
+                    placeholder="UF"
                     @input="requiredField(user.endereco.uf)"
                   />
                   <span class="error-message">{{
@@ -225,13 +225,12 @@
               </tr>
               <tr>
                 <td colspan="2">
-                  <button type="submit" @click="$emit('close-modal')">
+                  <button @click="saveUser">
                     Salvar
                   </button>
                 </td>
               </tr>
             </table>
-          </form>
         </div>
       </div>
     </div>
@@ -240,6 +239,7 @@
 
 <script>
 import { validate as validateCPF } from "gerador-validador-cpf";
+import { auth as api } from "@/api";
 import { formatDate } from "@/shared/mixins";
 export default {
   name: "RegisterUser",
@@ -306,6 +306,18 @@ export default {
         ? "CPF é inválido"
         : "";
     },
+    saveUser(){
+      api
+        .post(`/v1/Cliente/Adicionar/`, this.user)
+        .then((response) => {
+          console.log(response);
+          // this.clients = response.data;
+        })
+        .finally(() => {
+          // this.showModal = false;
+          // this.getClients();
+        });
+    }
   },
 };
 </script>
@@ -316,6 +328,7 @@ export default {
   top: 0;
   bottom: 0;
   left: 0;
+  z-index: 1;
   right: 0;
   display: flex;
   justify-content: center;

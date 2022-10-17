@@ -1,9 +1,25 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view name="header">
+      <Header />
+    </router-view>
+    <router-view class="content" />
+    <router-view name="footer">
+      <Footer />
+    </router-view>
   </div>
 </template>
+<script>
+import Footer from "@/components/Footer.vue";
+import Header from "@/components/Header.vue";
 
+export default {
+  components: {
+    Footer,
+    Header
+  },
+};
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -11,18 +27,8 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  min-height: 100%;
 }
 
-nav {
-  padding: 30px;
-}
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

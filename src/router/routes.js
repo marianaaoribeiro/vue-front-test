@@ -1,6 +1,7 @@
 
 
-// const header = () => import('@/components/Header.vue')
+const header = () => import('@/components/Header.vue')
+const footer = () => import('@/components/Footer.vue')
 
 const routes = [
   // {
@@ -17,7 +18,8 @@ const routes = [
     path: '/home',
     name: 'home',
     components: {
-      //header,
+      header,
+      footer,
       default: () => import('@/views/Home.vue'),
     },
     meta: {
