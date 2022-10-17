@@ -88,7 +88,6 @@ export default {
       api
         .get(`/v1/Cliente/Listar`)
         .then((response) => {
-          console.log(response.data);
           this.clients = response.data;
         })
         .finally(() => {

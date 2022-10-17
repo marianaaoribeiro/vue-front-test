@@ -1,7 +1,7 @@
 <template>
   <div class="topnav" id="myTopnav">
-    <a href="#home" class="active">Home</a>
-    <a href="#news">Logout</a>
+    <router-link to="/home" class="active">Home</router-link>
+    <router-link to="/login">Logout</router-link>
     <a href="javascript:void(0);" class="icon" @click="openSidemenu()">
       <i class="fa fa-bars"></i>
     </a>

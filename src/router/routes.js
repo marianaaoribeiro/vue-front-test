@@ -4,16 +4,16 @@ const header = () => import('@/components/Header.vue')
 const footer = () => import('@/components/Footer.vue')
 
 const routes = [
-  // {
-  //   path: '/login',
-  //   name: 'login',
-  //   components: {
-  //     default: () => import('@/views/Login.vue'),
-  //   },
-  //   meta: {
-  //     requiresAuth: false,
-  //   },
-  // },
+  {
+    path: '/login',
+    name: 'login',
+    components: {
+      default: () => import('@/views/Login.vue'),
+    },
+    meta: {
+      requiresAuth: false,
+    },
+  },
   {
     path: '/home',
     name: 'home',
