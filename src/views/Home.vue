@@ -18,10 +18,10 @@
           <td>{{ item.cpf }}</td>
           <td>{{ item.nome }}</td>
           <td>{{ item.rg }}</td>
-          <td>{{ item.dataExpedicao }}</td>
+          <td>{{ userDate(item.dataExpedicao) }}</td>
           <td>{{ item.orgaoExpedicao }}</td>
           <td>{{ item.uf }}</td>
-          <td>{{ item.dataNascimento }}</td>
+          <td>{{ userDate(item.dataNascimento) }}</td>
           <td>{{ item.sexo }}</td>
           <td>{{ item.estadoCivil }}</td>
           <td>{{ item.endereco.cep }}</td>
@@ -42,12 +42,14 @@
 import { auth as api } from "@/api";
 import RegisterUser from "@/components/RegisterUser.vue";
 import PageLoader from "@/components/PageLoader.vue";
+import { formatDate } from '@/shared/mixins'
 export default {
   name: "HomeView",
   components: {
     RegisterUser,
     PageLoader,
   },
+  mixins: [formatDate],
   data() {
     return {
       showModal: false,
