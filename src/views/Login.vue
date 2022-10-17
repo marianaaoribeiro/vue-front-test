@@ -27,7 +27,7 @@ export default {
   <style scoped>
 .body {
   /* background:linear-gradient(120deg,#099a6a,#8e44ad); */
-  background-image: url("https://images.pexels.com/photos/1563356/pexels-photo-1563356.jpeg");
+  background-image: radial-gradient(circle at 20.91% 70.37%, #5643f0 0, #7536e7 16.67%, #8c26dd 33.33%, #9f09d2 50%, #af00c6 66.67%, #bc00ba 83.33%, #c700ad 100%);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
