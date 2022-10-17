@@ -1,29 +1,40 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Router from 'vue-router'
+import routes from './routes'
+// import store from '../store'
 
-Vue.use(VueRouter)
+Vue.use(Router)
 
-const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
-]
-
-const router = new VueRouter({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
+
+// const verifyAcess = (route, resources) => {
+//   if (resources) {
+//     return resources.includes(route)
+//   }
+//   return false
+// }
+// router.beforeEach((to, from, next) => {
+//   const requiresAuth = to.matched.some((x) => x.meta.requiresAuth)
+//   const user = localStorage.user ? JSON.parse(localStorage.user) : {}
+//   store.commit('checkAuthentication')
+
+//   if (requiresAuth && !store.getters.isAuthenticated) {
+//     next('/login')
+//   } else if (requiresAuth && store.getters.isAuthenticated) {
+//     if (verifyAcess(to.name, user.resources)) {
+//       next((vm) => {
+//         vm.$router.push(to.path)
+//       })
+//     } else {
+//       next('/forbidden')
+//     }
+//   } else {
+//     next()
+  // }
+ //})
 
 export default router
