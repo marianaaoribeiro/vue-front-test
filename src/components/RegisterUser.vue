@@ -140,6 +140,20 @@
               </tr>
               <tr>
                 <td>
+                  <small class="info-caption ">
+                    Não sabe seu CEP?
+                    <a
+                      href="https://buscacepinter.correios.com.br/app/endereco/index.php"
+                      class="info-caption"
+                      rel="nofollow"
+                      target="_blank"
+                      >Clique aqui</a
+                    >
+                  </small>
+                </td>
+              </tr>
+              <tr>
+                <td>
                   <input
                     v-model="user.endereco.cep"
                     type="text"
@@ -456,5 +470,9 @@ select {
 .error-message {
   color: red;
   font-size: 11px;
+}
+.info-caption{
+  font-size: 11px;
+  cursor: pointer;
 }
 </style>
