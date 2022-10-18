@@ -3,7 +3,25 @@
     <div class="save-btn">
       <button @click="showModal = true">Cadastrar Cliente</button>
     </div>
-    <div class="container">
+    <label class="container"
+      >Nome
+      <input v-model="filterBy" value="name" type="radio" />
+      <span class="checkmark"></span>
+    </label>
+    <label class="container"
+      >CPF
+      <input v-model="filterBy" type="radio" value="cpf" />
+      <span class="checkmark"></span>
+    </label>
+    <input
+      v-model="search"
+      type="text"
+      id="searchInput"
+      @input="filterData()"
+      placeholder="Buscar.."
+    />
+    <button @click="getClients">Limpar Filtros</button>
+    <div class="table">
       <table>
         <tr>
           <th v-for="(item, index) in headers" :key="index">
@@ -34,10 +52,7 @@
         </tr>
       </table>
     </div>
-    <register-user
-      v-show="showModal"
-      @close-modal="showModal = false"
-    />
+    <register-user v-show="showModal" @close-modal="showModal = false" />
   </div>
 </template>
   
@@ -77,13 +92,23 @@ export default {
       ],
       clients: [],
       isLoadingData: false,
+      search: "",
+      filterBy: "name",
     };
   },
   beforeMount() {
     this.getClients();
   },
   methods: {
+    filterData() {
+      let filter =
+        this.filterBy == "name"
+          ? this.clients.filter((el) => el.nome.includes(this.search))
+          : this.clients.filter((el) => el.cpf.includes(this.search));
+      this.clients = filter;
+    },
     getClients() {
+      this.search = "";
       this.isLoadingData = true;
       api
         .get(`/v1/Cliente/Listar`)
@@ -92,19 +117,6 @@ export default {
         })
         .finally(() => {
           this.isLoadingData = false;
-        });
-    },
-    saveClient() {
-      const data = this.$store.getters.user;
-      api
-        .post(`/v1/Cliente/Adicionar/`, data)
-        .then((response) => {
-          console.log(response);
-          // this.clients = response.data;
-        })
-        .finally(() => {
-          // this.showModal = false;
-          // this.getClients();
         });
     },
     deleteClient(id) {
@@ -173,26 +185,97 @@ button {
   margin: 1% 6% 0 6%;
 }
 
-.container {
+.table {
   overflow-x: auto;
   margin: 1% 6% 0 6%;
   border: 1px solid #a9a9a9;
   border-radius: 10px;
 }
-.container::-webkit-scrollbar {
+.table::-webkit-scrollbar {
   width: 10px;
 }
 
-.container::-webkit-scrollbar-track {
+.table::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-.container::-webkit-scrollbar-thumb {
+.table::-webkit-scrollbar-thumb {
   background: #9c667d;
   border-radius: 15px;
 }
 
-.container::-webkit-scrollbar-thumb:hover {
+.table::-webkit-scrollbar-thumb:hover {
   background: #ce938b;
+}
+#searchInput {
+  background-position: 10px 10px;
+  width: 20%;
+  margin: 1%;
+  font-size: 16px;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ddd;
+}
+
+/* The container */
+.container {
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 23px;
+  width: 23px;
+  background-color: #eee;
+  border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
 }
 </style>
