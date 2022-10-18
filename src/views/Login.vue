@@ -45,19 +45,12 @@ export default {
       }
     }
   },
+  beforeMount(){
+    document.getElementsByTagName("body")[0].style.background = "hsla(282, 28%, 59%, 0.705)"
+  }
 };
 </script>
   <style scoped>
-.body {
-  background: linear-gradient(120deg, #099a6a, #8e44ad);
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  overflow: hidden;
-}
 .center {
   position: absolute;
   top: 50%;

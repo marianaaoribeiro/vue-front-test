@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :style="$route.name == 'login' ? { background: 'linear-gradient(120deg, #099a6a, #8e44ad)' } : ''">
+  <div id="app">
     <router-view name="header">
       <Header />
     </router-view>
@@ -31,9 +31,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
   min-height: 100%;
 }
-
 
 </style>

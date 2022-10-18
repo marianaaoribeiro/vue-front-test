@@ -97,6 +97,7 @@ export default {
     };
   },
   beforeMount() {
+    document.getElementsByTagName("body")[0].style.background = ""
     this.getClients();
   },
   methods: {
