@@ -1,5 +1,10 @@
 # test_front
 
+## Login
+```
+Users, email and password in src/api/login.json file
+```
+
 ## Project setup
 ```
 npm install
