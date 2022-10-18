@@ -1,7 +1,7 @@
 <template>
   <div class="topnav" id="myTopnav">
     <router-link to="/home" class="active">Home</router-link>
-    <router-link to="/login">Logout</router-link>
+    <a @click="logout">Logout</a>
     <a href="javascript:void(0);" class="icon" @click="openSidemenu()">
       <i class="fa fa-bars"></i>
     </a>
@@ -11,6 +11,11 @@
 export default {
   name: "HeaderView",
   methods: {
+    logout() {
+      this.$store.dispatch('logout').then(() => {
+        this.$router.push('/login')
+      })
+    },
     openSidemenu() {
       var x = document.getElementById("myTopnav");
       if (x.className === "topnav") {
@@ -52,6 +57,10 @@ export default {
 
 .topnav .icon {
   display: none;
+}
+
+a {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {

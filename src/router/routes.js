@@ -24,13 +24,7 @@ const routes = [
     },
     meta: {
       title: 'Home',
-      requiresAuth: false,
-      breadcrumb: [
-        {
-          name: 'home',
-          alias: 'Home',
-        },
-      ],
+      requiresAuth: true,
     },
   },
   {

@@ -2,32 +2,54 @@
   <div class="body">
     <div class="center">
       <h1>Login</h1>
-      <form method="post">
+      <p>{{error}}</p>
+      <div class="form">
         <div class="txt_field">
-          <input type="text" required />
+          <input v-model="email" type="email" required />
           <span></span>
-          <label>Username</label>
+          <label>Email</label>
         </div>
         <div class="txt_field">
-          <input type="password" required />
+          <input v-model="password" type="password" required />
           <span></span>
-          <label>Password</label>
+          <label>Senha</label>
         </div>
-        <input type="submit" value="Login" />
-      </form>
+        <button @click="login"> Login</button>
+      </div>
     </div>
   </div>
 </template>
-      <script>
+<script>
+import api from "@/api/login.json";
 export default {
   name: "LoginView",
-  methods: {},
+  data() {
+    return {
+      loginData: api.data,
+      email: "",
+      password: "",
+      error: '',
+    }
+  },
+  methods: {
+    login(){
+      let findUser = this.loginData.filter((el) => el.email == this.email)[0]
+      if (!findUser) {
+        this.error = 'Usuário não encontrado.'
+      } else if(findUser.password !== this.password){
+        this.error = 'Senha incorreta.'
+      }else{
+        this.error = ''
+        this.$store.commit('login', findUser)
+        this.$router.push('/home')
+      }
+    }
+  },
 };
 </script>
   <style scoped>
 .body {
-  /* background:linear-gradient(120deg,#099a6a,#8e44ad); */
-  background-image: radial-gradient(circle at 20.91% 70.37%, #5643f0 0, #7536e7 16.67%, #8c26dd 33.33%, #9f09d2 50%, #af00c6 66.67%, #bc00ba 83.33%, #c700ad 100%);
+  background: linear-gradient(120deg, #099a6a, #8e44ad);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -53,11 +75,11 @@ export default {
   border-bottom: 1px solid #ce938b;
   color: #2a2929;
 }
-.center form {
+.center .form {
   padding: 0 40px;
   box-sizing: border-box;
 }
-form .txt_field {
+.form .txt_field {
   position: relative;
   border-bottom: 2px solid #adadad;
   margin: 30px 0;
@@ -80,6 +102,10 @@ form .txt_field {
   font-size: 16px;
   pointer-events: none;
   transition: 0.5s;
+}
+p{
+  color: red;
+  margin-top: 2%;
 }
 .txt_field span::before {
   content: "";
@@ -108,7 +134,7 @@ form .txt_field {
 .pass:hover {
   text-decoration: underline;
 }
-input[type="submit"] {
+button {
   width: 100%;
   height: 50px;
   border-radius: 20px;
@@ -120,7 +146,7 @@ input[type="submit"] {
   cursor: pointer;
   outline: none;
 }
-input[type="submit"]:hover {
+button:hover {
   border-color: #2691d9;
   transition: 0.5s;
 }

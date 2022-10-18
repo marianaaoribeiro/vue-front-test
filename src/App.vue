@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :style="$route.name == 'login' ? { background: 'linear-gradient(120deg, #099a6a, #8e44ad)' } : ''">
     <router-view name="header">
       <Header />
     </router-view>
