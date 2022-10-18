@@ -2,7 +2,8 @@
   <footer>
     <p>
       Autor: Mariana Ribeiro<br />
-      <a href="mariana.alvesdor@gmail.com">mariana.alvesdor@gmail.com</a>
+      <a href="mariana.alvesdor@gmail.com">mariana.alvesdor@gmail.com</a> <br/>
+      <a href="https://www.linkedin.com/in/mariana-alves-oliveira-ribeiro/">linkedin.com/in/mariana-alves-oliveira-ribeiro</a>
     </p>
   </footer>
 </template>

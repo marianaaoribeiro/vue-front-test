@@ -2,7 +2,7 @@
   <transition name="modal-fade">
     <div class="modal-overlay" @click="$emit('close-modal')">
       <div class="modal" @click.stop>
-        <span class="close" @click="$emit('close-modal')">&times;</span>
+        <span class="close" @click="closeDialog()">&times;</span>
         <div style="overflow-y: auto" class="container">
             <table>
               <tr>
@@ -225,7 +225,7 @@
               </tr>
               <tr>
                 <td colspan="2">
-                  <button @click="saveUser">
+                  <button @click="saveOrUpdateUser()">
                     Salvar
                   </button>
                 </td>
@@ -246,8 +246,9 @@ export default {
   mixins: [formatDate],
   data() {
     return {
+      isUpdate: false,
       user: {
-        // clienteId: 0,
+        // clienteId: null,
         cpf: "",
         nome: "",
         rg: "",
@@ -258,7 +259,7 @@ export default {
         sexo: "",
         estadoCivil: "",
         endereco: {
-          // enderecoId: 0,
+          // enderecoId: null,
           cep: "",
           logradouro: "",
           numero: "",
@@ -296,6 +297,38 @@ export default {
     };
   },
   methods: {
+    openDialog(item) {
+      this.isUpdate = true
+      item.dataExpedicao = this.userDate(item.dataExpedicao)
+      item.dataNascimento = this.userDate(item.dataNascimento)
+      this.user = { ...item }
+    },
+    closeDialog() {
+      this.isUpdate = false
+      this.user = {  
+        clienteId: null, 
+        cpf: "",
+        nome: "",
+        rg: "",
+        dataExpedicao: "",
+        orgaoExpedicao: "",
+        uf: "",
+        dataNascimento: "",
+        sexo: "",
+        estadoCivil: "",
+        endereco: {
+          enderecoId: null,
+          cep: "",
+          logradouro: "",
+          numero: "",
+          complemento: "",
+          bairro: "",
+          cidade: "",
+          uf: "",
+        }, 
+      }
+      this.$emit('close-modal')
+    },
     requiredField(v) {
       return v ? "" : "Campo é obrigatório";
     },
@@ -306,16 +339,26 @@ export default {
         ? "CPF é inválido"
         : "";
     },
-    saveUser(){
-      api
-        .post(`/v1/Cliente/Adicionar/`, this.user)
+    cleanCPFMask(cpf) {
+      return cpf.replace(/[^\d]/g, '')
+    },
+    saveOrUpdateUser(){
+      const data = this.user
+      
+      data.dataNascimento = this.systemDate(this.user.dataNascimento)
+      data.dataExpedicao = this.systemDate(this.user.dataExpedicao)
+      data.cpf = this.cleanCPFMask(this.user.cpf)
+      const request = this.isUpdate
+          ? api.put(`/v1/Cliente/Alterar/`, data)
+          : api.post(`/v1/Cliente/Adicionar/`, data)
+
+      request
         .then((response) => {
           console.log(response);
-          // this.clients = response.data;
         })
         .finally(() => {
-          // this.showModal = false;
-          // this.getClients();
+          this.$emit('getClients')
+          this.closeDialog
         });
     }
   },

@@ -32,7 +32,8 @@
           <td colspan="16"><page-loader /></td>
         </tr>
         <tr v-else v-for="(item, index) in clients" :key="index">
-          <td><span @click="deleteClient(item.clienteId)">&times;</span></td>
+          <td><span @click="deleteClient(item.clienteId)" class="actionIcons">&times;</span></td>
+          <td><span @click="showModal = true, $refs.registerDialog.openDialog(item)" class="actionIcons">&#10000;</span></td>
           <td>{{ item.cpf }}</td>
           <td>{{ item.nome }}</td>
           <td>{{ item.rg }}</td>
@@ -52,7 +53,7 @@
         </tr>
       </table>
     </div>
-    <register-user v-show="showModal" @close-modal="showModal = false" />
+    <register-user v-show="showModal" ref="registerDialog" @get-clients="getClients" @close-modal="showModal = false" />
   </div>
 </template>
   
@@ -73,6 +74,7 @@ export default {
       showModal: false,
       headers: [
         "Excluir",
+        "Editar",
         "CPF",
         "Nome",
         "RG",
@@ -188,7 +190,9 @@ button {
 
 .table {
   overflow-x: auto;
-  margin: 1% 6% 0 6%;
+  overflow-y: auto;
+  max-height: 350px;
+  margin: 1% 6% 1% 6%;
   border: 1px solid #a9a9a9;
   border-radius: 10px;
 }
@@ -278,5 +282,16 @@ button {
   height: 6px;
   border-radius: 50%;
   background: white;
+}
+
+.actionIcons{
+  cursor: pointer;
+  font-size: 25px;
+  color: #9c667d;
+  margin-left: 20%;
+}
+
+.actionIcons:hover{
+  color: #ce938b;
 }
 </style>
